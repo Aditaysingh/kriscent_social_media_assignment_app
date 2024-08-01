@@ -21,7 +21,6 @@ class ReelItemWidget extends StatefulWidget {
   final ReelsController reelController;
   final UserController userController;
   final ReelModel currentReel;
-
   final VoidCallback onCommentTap;
 
   @override
@@ -29,6 +28,19 @@ class ReelItemWidget extends StatefulWidget {
 }
 
 class _ReelItemWidgetState extends State<ReelItemWidget> {
+  @override
+  void initState() {
+    widget.videoController.setLooping(true);
+    widget.videoController.play();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+   widget.videoController.setLooping(false);
+   widget.videoController.pause();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -47,8 +47,7 @@ class _ReelPageViewState extends State<ReelPageView> {
                 VideoPlayerController.network(currentReel.video ?? '')
                   ..initialize().then((_) {
                     setState(() {}); // Rebuild to show video player
-                    _videoControllers[index]!.play();
-                    _videoControllers[index]!.setLooping(true);
+
                   });
           }
           VideoPlayerController videoController = _videoControllers[index]!;

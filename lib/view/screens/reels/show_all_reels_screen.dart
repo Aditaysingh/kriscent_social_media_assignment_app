@@ -64,8 +64,6 @@ class _ShowAllReelPostsScreenState extends State<ShowAllReelPostsScreen> {
                   VideoPlayerController.network(currentReel.video ?? '')
                     ..initialize().then((_) {
                       setState(() {});
-                      _videoControllers[index]!.play();
-                      _videoControllers[index]!.setLooping(true);
                     });
             }
             VideoPlayerController videoController = _videoControllers[index]!;
