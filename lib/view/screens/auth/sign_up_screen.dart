@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
                   hint: 'Email'),
               CustomTextFiled(
                   controller: controller.passwordController,
-                  iconData: Icons.password,
+                  iconData: Icons.password,toHide: true,
                   hint: 'Password'),
               CustomTextFiled(
                   controller: controller.phoneController,
