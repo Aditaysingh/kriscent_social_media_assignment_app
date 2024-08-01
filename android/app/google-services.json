@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "928731675529",
+    "project_id": "kriscent-social-media-1a379",
+    "storage_bucket": "kriscent-social-media-1a379.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928731675529:android:fbf9a6bb0c1ab69f317f58",
+        "android_client_info": {
+          "package_name": "com.example.kriscent_socail_media"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAixoqCKPpVe3csIz-HEHJJn1OPlDGfnD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
