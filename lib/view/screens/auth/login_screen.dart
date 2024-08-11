@@ -1,10 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kriscent_socail_media/controllers/auth/auth_controller.dart';
-import 'package:kriscent_socail_media/view/screens/home/home_page.dart';
-import 'package:kriscent_socail_media/view/screens/auth/sign_up_screen.dart';
 import 'package:kriscent_socail_media/view/utils/app_widgets/buttons/custom_button.dart';
 import 'package:kriscent_socail_media/view/utils/sizes/size.dart';
 import '../../utils/app_widgets/textfields/custom_textfiled.dart';
@@ -21,60 +17,97 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       body: SafeArea(
         child: Obx(() {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
-                'Login Here',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: textBoldFont),
-              ),
-              const Spacer(),
-              CustomTextFiled(
-                controller: controller.emailController,
-                hint: 'Email',
-                iconData: Icons.mail,
-              ),
-              CustomTextFiled(
-                controller: controller.passwordController,
-                hint: 'Password',
-                iconData: Icons.lock,
-                toHide: true,
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-              CustomButton(
-                  onPressed: controller.login,
-                  isLoading: controller.isLoading,
-                  text: 'Login'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Don't have an account?",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  TextButton(
-                    onPressed: controller.onSignUpTap,
-                    child: const Text(
-                      'Sign Up Here',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.brown,
-                          fontSize: 18),
+                  SizedBox(height: size.height * 0.05),
+                  Text(
+                    'Welcome Back!',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                      color: Colors.black87,
                     ),
                   ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Please sign in to continue',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.1),
+                  CustomTextFiled(
+                    controller: controller.emailController,
+                    hint: 'Email',
+                    iconData: Icons.mail_outline,
+                  ),
+                  SizedBox(height: 16),
+                  CustomTextFiled(
+                    controller: controller.passwordController,
+                    hint: 'Password',
+                    iconData: Icons.lock_outline,
+                    toHide: true,
+                  ),
+                  SizedBox(height: 24),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        // Implement forgot password functionality
+                      },
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Colors.brown,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  CustomButton(
+                    onPressed: controller.login,
+                    isLoading: controller.isLoading,
+                    text: 'Login',
+                  ),
+                  SizedBox(height: size.height * 0.05),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Don't have an account?",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      TextButton(
+                        onPressed: controller.onSignUpTap,
+                        child: const Text(
+                          'Sign Up Here',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.brown,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.05),
                 ],
               ),
-              const Spacer(
-                flex: 1,
-              )
-            ],
+            ),
           );
         }),
       ),

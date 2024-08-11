@@ -8,7 +8,7 @@ class CustomTextFiled extends StatelessWidget {
       this.toHide = false,
       required this.iconData,
       this.onChanged,
-      required this.hint});
+      required this.hint,});
 
   final TextEditingController controller;
   final bool toHide;

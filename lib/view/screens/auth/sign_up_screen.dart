@@ -35,19 +35,19 @@ class SignUpScreen extends StatelessWidget {
               CustomTextFiled(
                   controller: controller.nameController,
                   iconData: Icons.drive_file_rename_outline,
-                  hint: 'Name'),
+                  hint: 'Name',),
               CustomTextFiled(
                   controller: controller.emailController,
                   iconData: Icons.mail,
-                  hint: 'Email'),
+                  hint: 'Email',),
               CustomTextFiled(
                   controller: controller.passwordController,
                   iconData: Icons.password,toHide: true,
-                  hint: 'Password'),
+                  hint: 'Password',),
               CustomTextFiled(
                   controller: controller.phoneController,
                   iconData: Icons.phone_android,
-                  hint: 'Phone'),
+                  hint: 'Phone',),
               20.height,
               CustomButton(
                 text: 'Sign Up',

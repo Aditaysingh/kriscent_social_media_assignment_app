@@ -15,8 +15,16 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  ReelsController reelsController = Get.put(ReelsController());
-  Map<int, VideoPlayerController> _videoControllers = {};
+  final ReelsController reelsController = Get.put(ReelsController());
+  final Map<int, VideoPlayerController> _videoControllers = {};
+
+  @override
+  void dispose() {
+    _videoControllers.forEach((index, controller) {
+      controller.dispose();
+    });
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,49 +32,59 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       body: SafeArea(
         child: Obx(
-          () => Column(
+              () => Column(
             children: [
               CustomTextFiled(
-                  onChanged: (text) {
-                    reelsController.performSearch(text);
-                  },
-                  controller: reelsController.reelSearchController,
-                  hint: 'Search..',
-                  iconData: Icons.search),
+                onChanged: (text) {
+                  reelsController.performSearch(text);
+                },
+                controller: reelsController.reelSearchController,
+                hint: 'Search..',
+                iconData: Icons.search,
+              ),
               SizedBox(
                 height: sizes.getHeight * 0.02,
               ),
               Expanded(
                 child: reelsController.searchedReelsList.isEmpty
                     ? const Center(
-                        child: Text("No Reels Available"),
-                      )
+                  child: Text("No Reels Available"),
+                )
                     : GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          childAspectRatio: 0.6,
-                          crossAxisSpacing: 2
-                        ),
-                        itemCount: reelsController.searchedReelsList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var currentReel =
-                              reelsController.searchedReelsList[index];
-                          if (!_videoControllers.containsKey(index)) {
-                            _videoControllers[index] = VideoPlayerController
-                                .network(currentReel.video ?? '')
-                              ..initialize().then((_) {
-                                setState(() {}); // Rebuild to show video player
-                                // _videoControllers[index]!.play();
-                              });
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.6,
+                    crossAxisSpacing: 2,
+                  ),
+                  itemCount: reelsController.searchedReelsList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var currentReel =
+                    reelsController.searchedReelsList[index];
+                    if (!_videoControllers.containsKey(index)) {
+                      _videoControllers[index] = VideoPlayerController
+                          .network(currentReel.video ?? '')
+                        ..initialize().then((_) {
+                          if (mounted) {
+                            setState(() {}); // Rebuild to show video player
                           }
-                          VideoPlayerController videoController =
-                              _videoControllers[index]!;
+                        });
+                    }
+                    VideoPlayerController videoController =
+                    _videoControllers[index]!;
 
-                          return GridVideoItem(videoController: videoController, onItemTap: () {
-                            Get.to(()=>ShowAllReelPostsScreen(reelsList: reelsController.searchedReelsList, pageController: PageController(initialPage: index), title: 'Searched Reels', videoControllers: _videoControllers,));
-                          },);
-                        },
-                      ),
+                    return GridVideoItem(
+                      videoController: videoController,
+                      onItemTap: () {
+                        Get.to(() => ShowAllReelPostsScreen(
+                          reelsList: reelsController.searchedReelsList,
+                          pageController: PageController(initialPage: index),
+                          title: 'Searched Reels',
+                          videoControllers: _videoControllers,
+                        ));
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -74,5 +92,4 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
-
 }

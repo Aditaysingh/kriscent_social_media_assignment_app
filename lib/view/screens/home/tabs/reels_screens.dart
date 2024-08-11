@@ -24,7 +24,6 @@ class _ReelPageViewState extends State<ReelPageView> {
 
   @override
   Widget build(BuildContext context) {
-    var sizes = MediaQuery.of(context).size; // Use MediaQuery to get screen size
 
     return Obx(() {
       if (reelController.isLoading) {
@@ -197,5 +196,6 @@ class _ReelPageViewState extends State<ReelPageView> {
       },
     );
   }
+
 }
 

@@ -10,18 +10,24 @@ import '../../../../models/profile/user_model.dart';
 import '../../../../services/app_auth_service.dart';
 
 class ReelItemWidget extends StatefulWidget {
+
+
   const ReelItemWidget(
       {super.key,
         required this.videoController,
         required this.reelController,
         required this.currentReel,
-        required this.onCommentTap, required this.userController});
+        required this.onCommentTap,
+        required this.userController,
+        
+      });
 
   final VideoPlayerController videoController;
   final ReelsController reelController;
   final UserController userController;
   final ReelModel currentReel;
   final VoidCallback onCommentTap;
+
 
   @override
   State<ReelItemWidget> createState() => _ReelItemWidgetState();
@@ -82,20 +88,26 @@ class _ReelItemWidgetState extends State<ReelItemWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      IconButton(
+                      GestureDetector(
+                        onLongPress: () {
+                          _showLikesBottomSheet(widget.currentReel.likesIds ?? []);
+                        },
+                        child: IconButton(
                           onPressed: () {
                             widget.reelController.manageReelLike(widget.currentReel);
                           },
                           icon: Column(
                             children: [
-                              widget.reelController
-                                  .isReelLikedWidget(widget.currentReel.likesIds),
+                              widget.reelController.isReelLikedWidget(widget.currentReel.likesIds),
                               Text(
-                                '${widget.currentReel.likesIds?.length}',
+                                '${widget.currentReel.likesIds?.length ?? 0}',
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ],
-                          )),
+                          ),
+                        ),
+                      ),
+
                       IconButton(
                         onPressed: widget.onCommentTap,
                         icon: Column(
@@ -208,5 +220,46 @@ class _ReelItemWidgetState extends State<ReelItemWidget> {
         ],
       ),
     );
+  }
+  void _showLikesBottomSheet(List<String> likesIds) async {
+    List<UserModel> users = await widget.reelController.getUsersWhoLiked(likesIds);
+
+    if (users.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("No likes yet.")),
+      );
+      return;
+    }
+
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      enableDrag: true,
+      scrollControlDisabledMaxHeightRatio: 3 / 4,
+      backgroundColor: const Color(0xfff2f2f2),
+      isScrollControlled: true,
+      constraints: BoxConstraints(
+        minHeight: 400,
+        maxHeight: context.screenHeight *0.75 ,
+        minWidth: context.screenWidth,
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(10),
+          child: ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(users[index].profileImage ?? ''),
+                ),
+                title: Text(users[index].name ?? 'User'),
+              );
+            },
+          ),
+        );
+      },
+    );
+
   }
 }

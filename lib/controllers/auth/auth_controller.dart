@@ -185,7 +185,7 @@ class AuthController extends GetxController {
     }
     updateLoading(false);
     resetFields();
-    showMessage(message: 'Profile Updated Successfullly');
+    showMessage(message: 'Profile Updated Successfully');
     Get.back();
 
   }

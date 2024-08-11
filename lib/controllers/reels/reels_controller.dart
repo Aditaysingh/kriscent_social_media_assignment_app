@@ -226,4 +226,15 @@ class ReelsController extends GetxController {
     showMessage(message: 'Comment Uploaded Successfully');
     commentController.clear();
   }
+
+  Future<List<UserModel>> getUsersWhoLiked(List<String> likesIds) async {
+    if (likesIds.isEmpty) return [];
+
+    var usersQuery = await FirebaseFirestore.instance
+        .collection('users')
+        .where('id', whereIn: likesIds)
+        .get();
+
+    return usersQuery.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
+  }
 }
