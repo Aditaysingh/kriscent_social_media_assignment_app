@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kriscent_socail_media/view/screens/home/home_page.dart';
 import 'package:kriscent_socail_media/view/screens/auth/login_screen.dart';
 import 'package:kriscent_socail_media/view/utils/sizes/size.dart';
-import 'package:kriscent_socail_media/view/utils/sizes/size.dart';
-
-import '../../utils/sizes/size.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -67,6 +64,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
+                // if we want to change background we can change here image
                 image: AssetImage('assets/images/splash_background.jpg'),
                 fit: BoxFit.cover,
               ),
